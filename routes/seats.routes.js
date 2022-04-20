@@ -3,6 +3,8 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const db = require('../db');
 
+const app = express();
+
 const message = { message: 'OK' };
 
 router.route('/seats').get((req, res) => {

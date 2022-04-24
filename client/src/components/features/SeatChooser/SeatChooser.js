@@ -55,4 +55,4 @@ class SeatChooser extends React.Component {
   };
 }
 
-export default SeatChooser;v
+export default SeatChooser;

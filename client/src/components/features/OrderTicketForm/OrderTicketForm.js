@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Row, Col, Alert, Progress } from 'reactstrap';
 
@@ -45,7 +46,7 @@ class OrderTicketForm extends React.Component {
 
     if(order.client && order.email && order.day && order.seat) {
       await addSeat(order);
-      loadSeats ();
+      loadSeats();
       this.setState({ 
         order: {
           client: '',

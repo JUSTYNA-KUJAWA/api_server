@@ -27,7 +27,7 @@ router.route('/seats').post((req, res) => {
   if (db.seats.some(check => (check.day == day && check.seat == seat))) {
     return res.status(404).json({ message: "The slot is already taken..." });
   } else {
-    [...db.seats, { addSeat }];
+    db.seats = [...db.seats, { addSeat }];
     res.json({ message: 'OK' });
 }
 });

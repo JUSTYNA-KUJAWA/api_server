@@ -1,6 +1,7 @@
 import { API_URL } from '../config';
 import axios from 'axios';
 
+
 /* SELECTORS */
 export const getSeats = ({ seats }) => seats.data;
 export const getRequests = ({ seats }) => seats.requests;

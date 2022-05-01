@@ -1,5 +1,4 @@
 const Testimonial = require('../models/testimonial.model');
-
 exports.getAll = async (req, res) => {
     try {
       res.json(await Testimonial.find());
@@ -7,17 +6,6 @@ exports.getAll = async (req, res) => {
     catch(err) {
       res.status(500).json({ message: err });
     }
-}
-
-exports.getById = async (req, res) => {
-    try {
-      const tes = await Testimonial.findById(req.params.id);
-      if(!tes) res.status(404).json({ message: 'Not found' });
-      else res.json(tes);
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }  
 }
 
 exports.getRandom = async (req, res) => {
@@ -33,6 +21,17 @@ exports.getRandom = async (req, res) => {
     }
   }
 
+exports.getById = async (req, res) => {
+    try {
+      const tes = await Testimonial.findById(req.params.id);
+      if(!tes) res.status(404).json({ message: 'Not found' });
+      else res.json(tes);
+    }
+    catch(err) {
+      res.status(500).json({ message: err });
+    }  
+}
+
 exports.postTes = async (req, res) => {
     try {
       const { id, author, text } = req.body;
@@ -43,10 +42,9 @@ exports.postTes = async (req, res) => {
       res.status(500).json({ message: err });
     }
   }
-
 exports.putTes = async (req, res) => {
     const { id, author, text } = req.body;
-
+  
     try {
       const tes = await Testimonial.findById(req.params.id);
       if(tes) {
@@ -59,7 +57,6 @@ exports.putTes = async (req, res) => {
       res.status(500).json({ message: err });
     }
 }
-
 exports.deleteTes = async (req, res) => {
     try {
       const tes = await Testimonial.findById(req.params.id);

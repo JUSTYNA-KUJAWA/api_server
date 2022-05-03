@@ -9,23 +9,50 @@ class SeatChooser extends React.Component {
   componentDidMount() {
     const { loadSeats, loadSeatsData } = this.props;
     loadSeats();
-    this.socket = io('localhost:8000', { transports: ['websocket'] });
-    this.socket.on('seatsUpdated', seats => { loadSeatsData(seats) });
+    this.socket = io.connect(process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8000', {
+      transports: ['websocket'],
+    });
+    this.socket.on('seatsUpdated', (seats) => {
+      loadSeatsData(seats);
+    });
   }
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
 
-    return (seats.some(item => (item.seat === seatId && item.day === chosenDay)));
-  }
+    return seats.some((item) => item.seat === seatId && item.day === chosenDay);
+  };
 
   prepareSeat = (seatId) => {
     const { chosenSeat, updateSeat } = this.props;
     const { isTaken } = this;
 
-    if (seatId === chosenSeat) return <Button key={seatId} className="seats__seat" color="primary">{seatId}</Button>;
-    else if (isTaken(seatId)) return <Button key={seatId} className="seats__seat" disabled color="secondary">{seatId}</Button>;
-    else return <Button key={seatId} color="primary" className="seats__seat" outline onClick={(e) => updateSeat(e, seatId)}>{seatId}</Button>;
+    if (seatId === chosenSeat) 
+     return (<Button 
+              key={seatId} 
+              className="seats__seat" 
+              color="primary"
+              >
+                {seatId}
+            </Button>);
+    else if (isTaken(seatId))
+     return (<Button 
+              key={seatId} 
+              className="seats__seat" 
+              disabled color="secondary"
+              >
+              {seatId}
+            </Button>);
+    else 
+      return (
+        <Button 
+          key={seatId} 
+          color="primary" 
+          className="seats__seat" 
+          outline onClick={(e) => updateSeat(e, seatId)}
+          >
+          {seatId}
+        </Button>);
   }
 
   render() {
@@ -37,15 +64,27 @@ class SeatChooser extends React.Component {
     return (
       <div>
         <h3>Pick a seat</h3>
-        <small id="pickHelp" className="form-text text-muted ml-2"><Button color="secondary" /> – seat is already taken</small>
-        <small id="pickHelpTwo" className="form-text text-muted ml-2 mb-4"><Button outline color="primary" /> – it's empty</small>
-        {(requests['LOAD_SEATS'] && requests['LOAD_SEATS'].success) && <div className="seats">{[...Array(50)].map((x, i) => prepareSeat(i + 1))}</div>}
-        {(requests['LOAD_SEATS'] && requests['LOAD_SEATS'].pending) && <Progress animated color="primary" value={50} />}
-        {(requests['LOAD_SEATS'] && requests['LOAD_SEATS'].error) && <Alert color="warning">Couldn't load seats...</Alert>}
-        <h4>{`Free seats: ${freeSeats}/50`} </h4>
+        <small id='pickHelp' className='form-text text-muted ml-2'>
+          <Button color='secondary' /> – seat is already taken
+        </small>
+        <small id='pickHelpTwo' className='form-text text-muted ml-2 mb-4'>
+          <Button outline color='primary' /> – it's empty
+        </small>
+        {requests['LOAD_SEATS'] && requests['LOAD_SEATS'].success && (
+          <div className='seats'>
+            {[...Array(50)].map((x, i) => prepareSeat(i + 1))}
+          </div>
+        )}
+        {requests['LOAD_SEATS'] && requests['LOAD_SEATS'].pending && (
+          <Progress animated color='primary' value={50} />
+        )}
+        {requests['LOAD_SEATS'] && requests['LOAD_SEATS'].error && (
+          <Alert color='warning'>Couldn't load seats...</Alert>
+        )}
+        <h3>{`Free seats: ${freeSeats}/50`} </h3>
       </div>
-    )
-  };
+    );
+  }
 }
 
 export default SeatChooser;

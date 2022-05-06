@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_URL } from '../config';
-
 /* SELECTORS */
 export const getSeats = ({ seats }) => seats.data;
 export const getRequests = ({ seats }) => seats.requests;
@@ -45,13 +44,14 @@ export const loadSeatsRequest = () => {
 };
 
 export const addSeatRequest = (seat) => {
+  
   return async dispatch => {
 
     dispatch(startRequest({ name: 'ADD_SEAT' }));
     try {
-      let res = await axios.post(`${API_URL}/seats`, seat);
-      dispatch(addSeat(res));
-      dispatch(endRequest({ name: 'ADD_SEAT' }));
+      await axios.post(`${API_URL}/seats`,seat);
+      dispatch(addSeat(seat));
+      dispatch(endRequest({ name: 'ADD_SEAT' }));;
 
     } catch(e) {
       if (e.message.includes('409')) {

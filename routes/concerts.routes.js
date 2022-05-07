@@ -1,15 +1,26 @@
+
 const express = require('express');
 const router = express.Router();
+
 const ConcertController = require('../controllers/concerts.controller');
+
 
 router.get('/concerts', ConcertController.getAll);
 
-router.get('/concerts/:id', ConcertController.getById);
+router.get('/concerts/:id', ConcertController.getItem);
 
-router.post('/concerts', ConcertController.postCon);
+router.post('/concerts', ConcertController.postItem);
 
-router.put('/concerts/:id', ConcertController.putCon);
+router.delete('/concerts/:id', ConcertController.deleteItem);
 
-router.delete('/concerts/:id', ConcertController.deleteCon);
+router.put('/concerts/:id', ConcertController.putItem);
 
-module.exports = router;
+router.get('/concerts/performer/:performer', ConcertController.getPerformer);
+
+router.get('/concerts/genre/:genre', ConcertController.getGenre);
+
+router.get('/concerts/price/:price_min/:price_max', ConcertController.getPrice);
+
+router.get('/concerts/price/day/:day', ConcertController.getbyDay);
+
+module.exports = router; 

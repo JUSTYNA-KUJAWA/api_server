@@ -35,10 +35,9 @@ app.get('*', (req, res) => {
 app.use((req, res) => {
   res.status(404).send('404 not found...');
 })
-/*
+
 // connects our backend code with the database
-mongoose.connect('mongodb+srv://sebastian:haslo1@cluster0.4xnnj.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-*/
+
 const dbURI = process.env.NODE_ENV === 'production'
   ? 'mongodb+srv://JUSTI:Sosthene05072012@cluster0.epgpr.mongodb.net/NewWaveDB?retryWrites=true&w=majority'
   : 'mongodb://localhost:27017/NewWaveDB';

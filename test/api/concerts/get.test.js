@@ -48,12 +48,20 @@ describe('GET /api/concerts', () => {
 		expect(res.body.length).to.be.equal(2);
 	});
 
-	it('/day/:day should return an array with concerts filtered by day ', async () => {
-		const res = await request(server).get('/api/concerts/day/1');
+	it('/day/:day should return an array with negative path ', async () => {
+		const res = await request(server).get('/api/concerts/day/4');
 		expect(res.status).to.be.equal(200);
-		expect(res.body).to.be.an('object');
+		expect(res.body).to.be.an('array');
 		expect(res.body).to.not.be.null;
 	});
+
+    it('/day/:day should return an array with concerts filtered by day positive path ', async () => {
+		const res = await request(server).get('/api/concerts/day/1');
+		expect(res.status).to.be.equal(200);
+		expect(res.body).to.be.an('array');
+		expect(res.body.length)
+	});
+
 
 	it('/price/:price_min/:price_max should return an array with concerts filtered by price', async () => {
 		const res = await request(server).get('/api/concerts/price/40/50');

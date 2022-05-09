@@ -21,6 +21,6 @@ router.get('/concerts/genre/:genre', ConcertController.getGenre);
 
 router.get('/concerts/price/:price_min/:price_max', ConcertController.getPrice);
 
-router.get('/concerts/price/day/:day', ConcertController.getbyDay);
+router.get('/concerts/day/:day', ConcertController.getbyDay);
 
 module.exports = router; 

@@ -125,7 +125,7 @@ exports.getPrice = async (req, res) => {
 exports.getbyDay = async (req, res) => {
   try {
     const day = req.params.day;
-    const getDay = await Concert.find({ day: day });
+    const getDay = await Concert.findOne({ day: day });
     if (!getDay) res.status(404).json({ message: 'Not found' });
     else {
       res.json(getDay);

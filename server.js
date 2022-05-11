@@ -12,7 +12,7 @@ const seatsRoutes = require('./routes/seats.routes');
 
 const app = express();
 
-app.use(express.static);
+app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());

@@ -48,17 +48,19 @@ describe('GET /api/concerts', () => {
 		expect(res.body.length).to.be.equal(2);
 	});
 
-	it('/day/:day should return an array with negative path ', async () => {
+	it('/day/:day should return an empty array when there is no matching data in db ', async () => {
 		const res = await request(server).get('/api/concerts/day/4');
 		expect(res.status).to.be.equal(200);
 		expect(res.body).to.be.an('array');
+		expect(res.body).to.equal(0);
 		expect(res.body).to.not.be.null;
 	});
 
-    it('/day/:day should return an array with concerts filtered by day positive path ', async () => {
+    it('/day/:day should return an array with proper amount of concerts filtered by day (positive path)', async () => {
 		const res = await request(server).get('/api/concerts/day/1');
 		expect(res.status).to.be.equal(200);
 		expect(res.body).to.be.an('array');
+		expect(res.body).to.equal(0);
 		expect(res.body.length)
 	});
 

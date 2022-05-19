@@ -52,7 +52,7 @@ describe('GET /api/concerts', () => {
 		const res = await request(server).get('/api/concerts/day/4');
 		expect(res.status).to.be.equal(200);
 		expect(res.body).to.be.an('array');
-		expect(res.body).to.equal(0);
+		expect(res.body.length).to.equal(0);
 		expect(res.body).to.not.be.null;
 	});
 
@@ -60,8 +60,7 @@ describe('GET /api/concerts', () => {
 		const res = await request(server).get('/api/concerts/day/1');
 		expect(res.status).to.be.equal(200);
 		expect(res.body).to.be.an('array');
-		expect(res.body).to.equal(0);
-		expect(res.body.length)
+		expect(res.body.length).to.equal(1);;
 	});
 
 

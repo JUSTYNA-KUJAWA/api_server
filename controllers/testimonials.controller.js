@@ -1,4 +1,6 @@
 const Testimonial = require('../models/testimonial.model');
+const sanitize = require('mongo-sanitize');
+
 exports.getAll = async (req, res) => {
     try {
       res.json(await Testimonial.find());
@@ -34,7 +36,8 @@ exports.getById = async (req, res) => {
 
 exports.postTes = async (req, res) => {
     try {
-      const { id, author, text } = req.body;
+      const clean = sanitize(req.body);
+      const { id, author, text } = clean;
       const newTestimonial = new Testimonial({ id: id, author: author, text: text });
       await newTestimonial.save();
       res.json({ message: 'OK' });
